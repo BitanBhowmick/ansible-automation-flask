@@ -1,0 +1,35 @@
+- name: Deploy a web application
+  hosts: localhost
+  connection: local
+  vars:
+    db_name: testDB
+    db_user: db_user
+    db_user_password: password
+  tasks:
+    - name: Ping
+      ping:
+
+    - name: Install all required Python dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - python
+        - python-setuptools
+        - python-dev
+        - build-essential
+        - python-pip
+
+    - name: Install MySQL dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - mysql-server
+        - mysql-client
+
+    - name: Install python flask modules
+      pip:
+        requirements: /home/ansible/Demo-Web-Application/requirements.txt
+
+    - name: Copy source code
+      copy: src=app.py dest=/home/ansible/Demo-Web-Application/app.py
+
+    - name: Start web server
+      shell: "FLASK APP=/home/ansible/Demo-Web-Application/app.py nohup python -m flask run --host 0.0.0.0 &"

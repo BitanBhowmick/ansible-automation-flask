@@ -1,0 +1,2 @@
+ansible_host:ubuntu@172.0.0.2 
+ansible_ssh_pass:password

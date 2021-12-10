@@ -1,0 +1,18 @@
+- name: Deploy a web application
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Ping
+      ping:
+
+    - name: Install all required Python dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - python
+        - python-setuptools
+        - python-dev
+        - build-essential
+        - python-pip
+
+    - include: tasks/deploy_db.yml
+    - include: tasks/deploy_web.yml

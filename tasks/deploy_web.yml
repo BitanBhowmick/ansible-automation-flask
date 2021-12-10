@@ -1,0 +1,9 @@
+    - name: Install python flask modules
+      pip:
+        requirements: /home/ansible/Demo-Web-Application/requirements.txt
+
+    - name: Copy source code
+      copy: src=app.py dest=/home/ansible/Demo-Web-Application/app.py
+
+    - name: Start web server
+      shell: "FLASK APP=/home/ansible/Demo-Web-Application/app.py nohup python -m flask run --host 0.0.0.0 &"
